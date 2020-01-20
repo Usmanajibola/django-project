@@ -15,7 +15,6 @@ def move_goal(request, goal_id):
 
 def add_goal(request):
     weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
-    new_user = User.objects.create(username='Louis Oma')
 
     myuser = User.objects.get(username="louis")
     track = list(range(1000, 9999))
