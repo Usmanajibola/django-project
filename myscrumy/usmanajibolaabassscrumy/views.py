@@ -17,8 +17,8 @@ def add_goal(request):
     weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
     new_user = User.objects.create(username='Louis Oma')
 
-    myuser = User.objects.get(username="Louis Oma")
-    track = list(range(1000, 10000))
+    myuser = User.objects.get(username="louis")
+    track = list(range(1000, 9999))
     random_number = random.sample(track, k=1)
 
     for i in random_number:
