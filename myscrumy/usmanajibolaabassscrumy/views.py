@@ -8,5 +8,5 @@ from usmanajibolaabassscrumy.models import GoalStatus, ScrumyGoals, ScrumyHistor
 #    return HttpResponse(goal)
 
 def move_goal(request, goal_id):
-    goalname = Scrumygoals.objects.get(goal_id = '%s' % goal_id)
+    goalname = ScrumyGoals.objects.get(goal_id = '%s' % goal_id)
     return HttpResponse(goalname.goal_name)
