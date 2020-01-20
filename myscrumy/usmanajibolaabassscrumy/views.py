@@ -27,6 +27,8 @@ def add_goal(request):
     mygoals = ScrumyGoals(goal_name = 'Keep Learning Django', goal_id = value, created_by='Louis', moved_by='Louis', owner='Louis', goal_status = weeklygoal, user = myuser)
     mygoals.save()
 
+    return Httpresponse(mygoals)
+
 def home(request):
     goal = ScrumyGoals.objects.filter(goal_name = 'Keep Learning Django')
     return HttpResponse(goal)
