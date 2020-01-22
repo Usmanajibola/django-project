@@ -10,8 +10,15 @@ def get_grading_parameters(request):
     return HttpResponse(goal)
 
 def move_goal(request, goal_id):
-    goalname = ScrumyGoals.objects.get(goal_id = '%s' % goal_id)
-    return HttpResponse(goalname.goal_name)
+    dictionary = {'error': 'A record with that goal id does not exist'}
+    try:
+        goalname = ScrumyGoals.objects.get(goal_id = '%s' % goal_id)
+    except Exception as e:
+        return render(request, usmanajibolaabassscrumy/exception.html, dictionary)
+    else:
+        return Httpresponse(goalname.goal_id)
+
+
 
 def add_goal(request):
     weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
