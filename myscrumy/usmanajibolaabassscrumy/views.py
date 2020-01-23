@@ -14,7 +14,7 @@ def move_goal(request, goal_id):
     try:
         goalname = ScrumyGoals.objects.get(goal_id = '%s' % goal_id)
     except Exception as e:
-        return render(request, usmanajibolaabassscrumy/exception.html, dictionary)
+        return render(request, 'usmanajibolaabassscrumy/exception.html', dictionary)
     else:
         return Httpresponse(goalname.goal_id)
 
