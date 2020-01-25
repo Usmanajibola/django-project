@@ -8,12 +8,24 @@
     <th>Done Goals</th>
   </tr>
   <tr>
-    <td>{{user}}</td>
-    <td>{{goal_name}}</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    {%for u in user%}
+    <td>{{u}}</td>
+    {%endfor%}
+    {%for week in weekly%}
+    <td>{{week}}</td>
+    {%endfor%}
+    {%for day in daily%}
+    <td>{{day}}</td>
+    {%endfor%}
+    {%for ver in verify%}
+    <td>{{ver}}</td>
+    {%endfor%}
+
+    <td>{{don}}</td>
+    
   </tr>
+
+  <!--
   <tr>
     <td></td>
     <td>{{goal_id}}</td>
@@ -21,4 +33,5 @@
     <td></td>
     <td></td>
   </tr>
+-->
 </table>
