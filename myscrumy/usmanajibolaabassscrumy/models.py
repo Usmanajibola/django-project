@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 # Create your models here.
 
 class GoalStatus(models.Model):
@@ -31,3 +32,14 @@ class ScrumyHistory(models.Model):
 
     def __str__(self):
         return self.created_by
+
+class SignupForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+
+
+class CreateGoalForm:
+    class meta:
+        model = ScrumyGoals
+        fields = ['goal_name', 'user']

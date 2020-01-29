@@ -1,0 +1,11 @@
+
+<!-- <a href="{% url 'usmanajibolaabassscrumy:about' %}"> About us </a> -->
+<form method="POST">
+  {%csrf_token%}
+
+  {%if form.error%} <p>{error}</p> {%endif%}
+
+  <input name="username" placeholder="username">
+  <input name="password" placeholder="password">
+  <input type="submit" value="Login">
+</form>

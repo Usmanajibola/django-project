@@ -1,29 +1,48 @@
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Weekly Goals</th>
-    <th>Daily Goals</th>
-    <th>Verify Goals</th>
-    <th>Done Goals</th>
-  </tr>
-  <tr>
-    {%for u in user%}
-    <td>{{u}}</td>
-    {%endfor%}
-    {%for week in weekly%}
-    <td>{{week}}</td>
-    {%endfor%}
-    {%for day in daily%}
-    <td>{{day}}</td>
-    {%endfor%}
-    {%for ver in verify%}
-    <td>{{ver}}</td>
-    {%endfor%}
+<!DOCTYPE html>
+<html>
 
-    <td>{{don}}</td>
-    
-  </tr>
+  <body>
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Weekly Goals</th>
+        <th>Daily Goals</th>
+        <th>Verify Goals</th>
+        <th>Done Goals</th>
+      </tr>
+      {%for user in user%}
+      <tr>
+
+        <td>{{user}}</td>
+
+
+        <td>
+          {% for week in weekly%}
+            {%if week.user.username == user.username%}
+              {{week}}
+            {%endif%}
+          {%endfor%}
+        </td>
+
+        <td>
+
+          {% for day in daily%}
+            {%if day.user.username == user.username%}
+              {{day}}
+            {%endif%}
+            {%endfor%}
+      {%endfor%}
+        </td>
+
+
+      </tr>
+      </table>
+  </body>
+</html>
+
+<a href="{%url 'usmanajibolaabassscrumy:addgoal'%}">ADD A GOAL</a>
+
 
   <!--
   <tr>
@@ -34,4 +53,3 @@
     <td></td>
   </tr>
 -->
-</table>
