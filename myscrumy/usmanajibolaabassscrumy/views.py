@@ -27,8 +27,10 @@ def index(request):
     return render(request, 'registration/signup.html', {'form':form})
 
 
-goal = ScrumyGoals.objects.filter(goal_name="Learn Django")
+
+
 def get_grading_parameters(request):
+    goal = ScrumyGoals.objects.filter(goal_name="Learn Django")
     return HttpResponse(goal)
 
 def move_goal(request, goal_id):
