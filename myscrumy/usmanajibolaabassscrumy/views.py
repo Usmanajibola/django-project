@@ -2,23 +2,48 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from usmanajibolaabassscrumy.models import GoalStatus, ScrumyGoals, ScrumyHistory, SignupForm, CreateGoalForm
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
 import random
 
 #Create your views here.
-def index(request):
+@login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
+def home(request):
+    #goal = ScrumyGoals.objects.get(goal_name = 'Learn Django')
+    #return HttpResponse(goal)
+    #dictionary = {'goal_name':goal.goal_name, 'goal_id':goal.goal_id, 'user':goal.user}
+    all_users = User.objects.all()
+    weeklygoal = GoalStatus.objects.get(status_name= "Weekly Goal")
+    goalweekly = weeklygoal.scrumygoals_set.all()
+    dailygoal = GoalStatus.objects.get(status_name= "Daily Goal")
+    goaldaily = dailygoal.scrumygoals_set.all()
+    verifygoal = GoalStatus.objects.get(status_name= "Verify Goal")
+    goalverify = verifygoal.scrumygoals_set.all()
+    donegoal = GoalStatus.objects.get(status_name= "Done Goal")
+    goaldone = donegoal.scrumygoals_set.all()
+
+    dictionary = {'user':all_users, 'weekly':goalweekly, 'daily':goaldaily, 'verify':goalverify, 'done':donegoal}
+    return render(request, 'usmanajibolaabassscrumy/home.html', dictionary)
+
+
+
+def sign_up(request):
     #dictionary = {'error':'invalid login credentials'}
     #return render(request, 'registration/signup.html', dictionary)
     if request.method == 'POST':
         if form.is_valid():
             form = SignupForm(request.POST)
             form_data = request.POST.dict()
-            form.save()
-            user  = form_data['username']
-            new_user = User.objects.get(username=user)
+
+            user  = User.objects.create_user(
+            form_data['username'], form_data['email'], form_data['password']
+            )
+            user.save()
+            new_user = User.objects.get(username=form_data['username'])
+
             group = Group.objects.get(name='Developer')
             group.user_set.add(new_user)
             #success_dic = {'success':'Congrats! SignUp successful'}
-            return HttpResponseRedirect('usmanajibolaabassscrumy/login.html')
+            return HttpResponseRedirect('usmanajibolaabassscrumy/signup.html')
 
 
 
@@ -28,7 +53,7 @@ def index(request):
 
 
 
-
+@login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
 def get_grading_parameters(request):
     goal = ScrumyGoals.objects.filter(goal_name="Learn Django")
     return HttpResponse(goal)
@@ -42,6 +67,7 @@ def move_goal(request, goal_id):
     else:
         return Httpresponse(goalname.goal_id)
 
+@login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
 def add_goal(request):
 
     if request.method == 'POST':
@@ -92,27 +118,3 @@ def add_goal(request):
 
 
         #return HttpResponse(mygoals)
-
-
-
-
-
-
-
-
-def home(request):
-    #goal = ScrumyGoals.objects.get(goal_name = 'Learn Django')
-    #return HttpResponse(goal)
-    #dictionary = {'goal_name':goal.goal_name, 'goal_id':goal.goal_id, 'user':goal.user}
-    all_users = User.objects.all()
-    weeklygoal = GoalStatus.objects.get(status_name= "Weekly Goal")
-    goalweekly = weeklygoal.scrumygoals_set.all()
-    dailygoal = GoalStatus.objects.get(status_name= "Daily Goal")
-    goaldaily = dailygoal.scrumygoals_set.all()
-    verifygoal = GoalStatus.objects.get(status_name= "Verify Goal")
-    goalverify = verifygoal.scrumygoals_set.all()
-    donegoal = GoalStatus.objects.get(status_name= "Done Goal")
-    goaldone = donegoal.scrumygoals_set.all()
-
-    dictionary = {'user':all_users, 'weekly':goalweekly, 'daily':goaldaily, 'verify':goalverify, 'done':donegoal}
-    return render(request, 'usmanajibolaabassscrumy/home.html', dictionary)
