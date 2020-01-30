@@ -1,8 +1,10 @@
 <html>
 
   <body>
-    <form class="" method="POST"> {%csrf_token%}
-      {{create_goal}}
+    <form method="POST">
+      {%csrf_token%}
+
+      {{creategoal}}
       <input type="submit" value="Create Goal">
     </form>
   </body>

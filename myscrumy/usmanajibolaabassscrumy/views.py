@@ -1,30 +1,30 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from usmanajibolaabassscrumy.models import GoalStatus, ScrumyGoals, ScrumyHistory
+from django.http import HttpResponse, HttpResponseRedirect
+from usmanajibolaabassscrumy.models import GoalStatus, ScrumyGoals, ScrumyHistory, SignupForm, CreateGoalForm
 from django.contrib.auth.models import User, Group
 import random
 
 #Create your views here.
 def index(request):
-    dictionary = {'error':'invalid login credentials'}
-    return render(request, 'registration/signup.html', dictionary)
-    form = SignupForm()
+    #dictionary = {'error':'invalid login credentials'}
+    #return render(request, 'registration/signup.html', dictionary)
     if request.method == 'POST':
-        form = SignupForm(request.POST)
-        form_data = request.POST.dict()
-        form.save()
-        user  = form_data['username']
-        new_user = User.objects.get(username=user)
-        group = Group.objects.get(name='Developer')
-        group.user_set.add(new_user)
-        #success_dic = {'success':'Congrats! SignUp successful'}
-        return HttpResponseRedirect('usmanajibolaabassscrumy/login.html')
+        if form.is_valid():
+            form = SignupForm(request.POST)
+            form_data = request.POST.dict()
+            form.save()
+            user  = form_data['username']
+            new_user = User.objects.get(username=user)
+            group = Group.objects.get(name='Developer')
+            group.user_set.add(new_user)
+            #success_dic = {'success':'Congrats! SignUp successful'}
+            return HttpResponseRedirect('usmanajibolaabassscrumy/login.html')
 
 
 
     else:
-        form
-        return render(request, 'registration/signup.html', {'form':form})
+        form = SignupForm()
+    return render(request, 'registration/signup.html', {'form':form})
 
 
 goal = ScrumyGoals.objects.filter(goal_name="Learn Django")
@@ -40,29 +40,63 @@ def move_goal(request, goal_id):
     else:
         return Httpresponse(goalname.goal_id)
 
-
-
 def add_goal(request):
-    form = CreateGoalForm()
-    if request.method == 'POST':
-        weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
 
-        myuser = User.objects.get(username="louis")
+    if request.method == 'POST':
         track = list(range(1000, 9999))
         random_number = random.sample(track, k=1)
-
+        weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
         for i in random_number:
             value = i
 
-        mygoals = ScrumyGoals(goal_name = 'Keep Learning Django', goal_id = value, created_by='Louis', moved_by='Louis', owner='Louis', goal_status = weeklygoal, user = myuser)
-        mygoals.save()
 
-        return Httpresponse(mygoals)
-    tem = {
-    'create_goal':form
+
+
+        if form.is_valid():
+            form = CreateGoalForm(request.POST)
+            form_data = request.post.dict()
+
+            user = User.objects.get(id=form_data['user'])
+            form.save(commit=False)
+            form.goal_id = value
+            form.created_by = user.username
+            form.moved_by = user.username
+            form.owner = user.username
+            form.goal_status = weeklygoal
+            form.save()
+            return HttpresponseRedirect('usmanajibolaabassscrumy/home')
+
+    form = CreateGoalForm()
+
+    context = {
+    'creategoal':form
     }
 
-    return render(request, 'usmanajibolaabassscrumy/add.html', tem)
+
+    return render(request, 'usmanajibolaabassscrumy/add.html', context)
+
+
+        #goal = form_data['goal_name']
+        #form_user = form_data['username']
+
+
+
+        #myuser = User.objects.get(username=form_user)
+
+
+
+        #mygoals = ScrumyGoals(goal_name = goal, goal_id = value, created_by='Louis', moved_by='Louis', owner='Louis', goal_status = weeklygoal, user = myuser)
+        #mygoals.save()
+
+
+        #return HttpResponse(mygoals)
+
+
+
+
+
+
+
 
 def home(request):
     #goal = ScrumyGoals.objects.get(goal_name = 'Learn Django')
