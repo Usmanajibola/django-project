@@ -29,6 +29,7 @@ def home(request):
 def sign_up(request):
     #dictionary = {'error':'invalid login credentials'}
     #return render(request, 'registration/signup.html', dictionary)
+    form = SignupForm()
     if request.method == 'POST':
         if form.is_valid():
             form = SignupForm(request.POST)
@@ -48,7 +49,7 @@ def sign_up(request):
 
 
     else:
-        form = SignupForm()
+        form
     return render(request, 'registration/signup.html', {'form':form})
 
 
