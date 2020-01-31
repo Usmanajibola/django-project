@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 import random
 
 #Create your views here.
+
 @login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
 def home(request):
     #goal = ScrumyGoals.objects.get(goal_name = 'Learn Django')
@@ -36,7 +37,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('usmanajibolaabassscrumy/home')
+            
         else:
             return render(request, 'usmanajibolaabassscrumy/login.html')
 
