@@ -118,7 +118,7 @@ def add_goal(request):
             add_goal.owner = user.username
             add_goal.goal_status = weeklygoal
             add_goal.save()
-            return redirect('home')
+            return HttpResponseRedirect('home')
 
     context = {
     'creategoal':form
