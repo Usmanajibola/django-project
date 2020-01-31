@@ -39,12 +39,12 @@ def login(request):
             auth.login(request, user)
 
         else:
-            return redirect('usmanajibolaabassscrumy/login.html')
+            return redirect('')
 
     else:
-        return redirect ('usmanajibolaabassscrumy/login.html')
+        return redirect ('login')
 
-    return render (request,'usmanajibolaabassscrumy/login.html')
+    return render (request,'login.html')
 
 def sign_up(request):
     #dictionary = {'error':'invalid login credentials'}
