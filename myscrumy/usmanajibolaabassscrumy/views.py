@@ -44,7 +44,7 @@ def login(request):
     else:
         return render (request, 'usmanajibolaabassscrumy/login.html')
 
-    return render (request, 'usmanajibolaabassscrumy/login.html')
+    return redirect ('usmanajibolaabassscrumy/login.html')
 
 def sign_up(request):
     #dictionary = {'error':'invalid login credentials'}
