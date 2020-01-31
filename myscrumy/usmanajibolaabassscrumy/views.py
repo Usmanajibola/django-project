@@ -39,10 +39,10 @@ def login(request):
             auth.login(request, user)
 
         else:
-            return redirect('')
+            return redirect('accounts/login')
 
     else:
-        return redirect ('login')
+        return redirect ('accounts/login')
 
     return render (request,'login.html')
 
