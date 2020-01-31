@@ -97,21 +97,20 @@ def move_goal(request, goal_id):
 def add_goal(request):
 
     if request.method == 'POST':
+        form = CreateGoalForm(request.POST)
         track = list(range(1000, 9999))
         random_number = random.sample(track, k=1)
         weeklygoal = GoalStatus.objects.get(status_name="Weekly Goal")
         for i in random_number:
             value = i
 
-
-
-
         if form.is_valid():
-            form = CreateGoalForm(request.POST)
-            form_data = request.post.dict()
+            username = form.cleaned_data['user']
+            goal_name = form.cleaned_data['goal_name']
+            user = User.objects.get(username=username)
 
-            user = User.objects.get(id=form_data['user'])
             form.save(commit=False)
+            
             form.goal_id = value
             form.created_by = user.username
             form.moved_by = user.username
