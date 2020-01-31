@@ -95,6 +95,7 @@ def move_goal(request, goal_id):
 
 @login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
 def add_goal(request):
+    form = CreateGoalForm()
 
     if request.method == 'POST':
         form = CreateGoalForm(request.POST)
@@ -109,17 +110,15 @@ def add_goal(request):
             goal_name = form.cleaned_data['goal_name']
             user = User.objects.get(username=username)
 
-            form.save(commit=False)
-            
-            form.goal_id = value
-            form.created_by = user.username
-            form.moved_by = user.username
-            form.owner = user.username
-            form.goal_status = weeklygoal
-            form.save()
-            return HttpresponseRedirect('usmanajibolaabassscrumy/home')
+            add_goal = form.save(commit=False)
 
-    form = CreateGoalForm()
+            add_goal.goal_id = value
+            add_goal.created_by = user.username
+            add_goal.moved_by = user.username
+            add_goal.owner = user.username
+            add_goal.goal_status = weeklygoal
+            add_goal.save()
+            return HttpresponseRedirect('usmanajibolaabassscrumy/home')
 
     context = {
     'creategoal':form
