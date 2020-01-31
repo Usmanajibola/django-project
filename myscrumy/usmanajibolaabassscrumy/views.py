@@ -37,12 +37,12 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            
+
         else:
             return render(request, 'usmanajibolaabassscrumy/login.html')
 
     else:
-        return redirect (request, 'usmanajibolaabassscrumy/login.html')
+        return render (request, 'usmanajibolaabassscrumy/login.html')
 
     return render (request, 'usmanajibolaabassscrumy/login.html')
 
