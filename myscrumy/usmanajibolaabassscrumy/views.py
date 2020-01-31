@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from usmanajibolaabassscrumy.models import GoalStatus, ScrumyGoals, ScrumyHistory, SignupForm, CreateGoalForm
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, auth
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+
 import random
 
 #Create your views here.
@@ -25,26 +27,48 @@ def home(request):
     return render(request, 'usmanajibolaabassscrumy/home.html', dictionary)
 
 
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('usmanajibolaabassscrumy/home')
+        else:
+            return render(request, 'usmanajibolaabassscrumy/login.html')
+
+    else:
+        return redirect (request, 'usmanajibolaabassscrumy/login.html')
+
+    return render (request, 'usmanajibolaabassscrumy/login.html')
 
 def sign_up(request):
     #dictionary = {'error':'invalid login credentials'}
     #return render(request, 'registration/signup.html', dictionary)
     form = SignupForm()
     if request.method == 'POST':
+        form = SignupForm(request.POST)
         if form.is_valid():
-            form = SignupForm(request.POST)
-            form_data = request.POST.dict()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
 
             user  = User.objects.create_user(
-            form_data['username'], form_data['email'], form_data['password']
+                username=username, password=password, email=email, first_name=first_name, last_name=last_name
             )
             user.save()
-            new_user = User.objects.get(username=form_data['username'])
+            print('signup successful')
+            new_user = User.objects.get(username=username)
 
             group = Group.objects.get(name='Developer')
             group.user_set.add(new_user)
             #success_dic = {'success':'Congrats! SignUp successful'}
-            return HttpResponseRedirect('usmanajibolaabassscrumy/signup.html')
+            return HttpResponseRedirect('signupsuccess')
 
 
 
@@ -103,6 +127,9 @@ def add_goal(request):
 
 
     return render(request, 'usmanajibolaabassscrumy/add.html', context)
+
+def signupsuccess(request):
+    return render(request, 'usmanajibolaabassscrumy/signupsuccess.html')
 
 
         #goal = form_data['goal_name']
