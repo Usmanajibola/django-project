@@ -91,7 +91,7 @@ def move_goal(request, goal_id):
     except Exception as e:
         return render(request, 'usmanajibolaabassscrumy/exception.html', dictionary)
     else:
-        return Httpresponse(goalname.goal_id)
+        return HttpResponse(goalname.goal_id)
 
 @login_required(login_url="/usmanajibolaabassscrumy/accounts/login")
 def add_goal(request):
