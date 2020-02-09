@@ -3,7 +3,10 @@
 <html>
 
   <body>
-    <table>
+    <h2>Welcome {{displayuser}}!!!</h2>
+    <br>
+    <h4>Lab for testing your application Number2 task 13</h4>
+    <table width="800" border="1">
       <tr>
         <th>User</th>
         <th>Weekly Goals</th>
@@ -20,20 +23,48 @@
         <td>
           {% for week in weekly%}
             {%if week.user.username == user.username%}
-              {{week}}
+              {{week.goal_name}}
+              <br>
+              <a href="{%url 'usmanajibolaabassscrumy:move' week.goal_id%}">Move this goal</a><br>
             {%endif%}
           {%endfor%}
+
         </td>
 
         <td>
 
           {% for day in daily%}
             {%if day.user.username == user.username%}
-              {{day}}
+              {{day.goal_name}}
+              <br>
+              <a href="{%url 'usmanajibolaabassscrumy:move' day.goal_id%}">Move this goal</a><br>
             {%endif%}
             {%endfor%}
-      {%endfor%}
+
         </td>
+
+        <td>
+          {% for ver in verify%}
+            {%if ver.user.username == user.username%}
+              {{ver.goal_name}}
+              <br>
+              <a href="{%url 'usmanajibolaabassscrumy:move' ver.goal_id%}">Move this goal</a><br>
+            {%endif%}
+          {%endfor%}
+        </td>
+
+        <td>
+          {% for don in done%}
+            {%if don.user.username == user.username%}
+              {{don.goal_name}}
+              <br>
+              <a href="{%url 'usmanajibolaabassscrumy:move' don.goal_id%}">Move this goal</a><br>
+            {%endif%}
+          {%endfor%}
+
+        </td>
+        {%endfor%}
+
 
 
       </tr>

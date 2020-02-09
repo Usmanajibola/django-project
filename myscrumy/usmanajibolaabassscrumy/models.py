@@ -48,3 +48,10 @@ class CreateGoalForm(ModelForm):
     class Meta:
         model = ScrumyGoals
         fields =['goal_name', 'user']
+
+class MoveMyGoalForm(ModelForm):
+    class Meta:
+        model = ScrumyGoals
+        fields = ('goal_status', 'user')
+
+        

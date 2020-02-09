@@ -11,9 +11,10 @@ urlpatterns=[
     path('',views.get_grading_parameters),
     path('accounts/signup', views.sign_up, name='signup'),
     path('login', views.login, name='login'),
-    path('movegoal/<int:goal_id>', views.move_goal),
+    path('movegoal/<int:goal_id>', views.move_goal, name='move'),
     path('addgoal', views.add_goal, name='addgoal'),
     path('home', views.home),
+    path('movegoal/home', views.home),
     path('accounts/', include(urls)),
     path('accounts/signupsuccess', views.signupsuccess, name='signupsuccess')
 ]

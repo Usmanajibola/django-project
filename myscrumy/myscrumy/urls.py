@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('usmanajibolaabassscrumy/',include('usmanajibolaabassscrumy.urls', namespace='usmanajibolaabassscrumy'))
+    path('usmanajibolaabassscrumy/',include('usmanajibolaabassscrumy.urls', namespace='usmanajibolaabassscrumy')),
+    path('websocket/', include('websocket.urls')),
 ]

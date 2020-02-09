@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+
+  <body>
+    <form method="POST">
+      {%csrf_token%}
+      {{move}}
+
+      <input type="submit" name="submit" value="Move Goal">
+    </form>
+  </body>
+</html>
