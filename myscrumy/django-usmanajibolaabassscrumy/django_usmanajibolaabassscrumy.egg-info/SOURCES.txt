@@ -1,0 +1,17 @@
+LICENSE.txt
+MANIFEST.in
+README.rst
+setup.py
+django_usmanajibolaabassscrumy.egg-info/PKG-INFO
+django_usmanajibolaabassscrumy.egg-info/SOURCES.txt
+django_usmanajibolaabassscrumy.egg-info/dependency_links.txt
+django_usmanajibolaabassscrumy.egg-info/top_level.txt
+usmanajibolaabassscrumy/__init__.py
+usmanajibolaabassscrumy/admin.py
+usmanajibolaabassscrumy/apps.py
+usmanajibolaabassscrumy/models.py
+usmanajibolaabassscrumy/tests.py
+usmanajibolaabassscrumy/urls.py
+usmanajibolaabassscrumy/views.py
+usmanajibolaabassscrumy/migrations/0001_initial.py
+usmanajibolaabassscrumy/migrations/__init__.py

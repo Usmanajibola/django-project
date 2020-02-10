@@ -67,6 +67,6 @@ def get_recentmessages(request):
 
     for chat in ChatMessage.objects.all():
         the_data = {"message":[{"username":chat.username, "message":chat.message, "timestamp":chat.timestamp}]}
-        data = json.dumps(the_data)
-        print(data)
-        _send_to_connection(connection_id, data)
+        #data = json.dumps(the_data)
+        print(the_data)
+        _send_to_connection(connection_id, the_data)

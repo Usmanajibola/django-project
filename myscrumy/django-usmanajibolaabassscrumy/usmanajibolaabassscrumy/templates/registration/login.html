@@ -1,0 +1,19 @@
+
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Login to your account or <a href = {% url 'usmanajibolaabassscrumy:signup' %}>Create an account</a></p>
+    <form method="POST">
+      {%csrf_token%}
+
+
+      <input name="username" placeholder="username">
+      <input type="password" name="password" placeholder="password">
+      <input type="submit" value="Login">
+      {%if form.error%} <p>{error}</p> {%endif%}
+
+    </form>
+
+  </body>
+</html>
