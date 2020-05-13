@@ -5,6 +5,7 @@ import json
 from websocket.models import Connection, ChatMessage
 import boto3
 from django.core.serializers import serialize
+from myscrumy import settings
 # Create your views here.
 
 @csrf_exempt
@@ -36,7 +37,7 @@ def disconnect(request):
 
 
 def _send_to_connection(connection_id, data):
-    gatewayapi = boto3.client('apigatewaymanagementapi', endpoint_url = 'https://667kkhuds9.execute-api.us-east-2.amazonaws.com/test/',  region_name =  'us-east-2', aws_access_key_id = 'AKIAIV2WKEVGM7MG5IJA', aws_secret_access_key = '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')
+    gatewayapi = boto3.client('apigatewaymanagementapi', endpoint_url = settings.endpoint_url,  region_name =  settings.region_name, aws_access_key_id = settings.aws_access_key_id, aws_secret_access_key = settings.aws_secret_access_key)
     return gatewayapi.post_to_connection(ConnectionId=connection_id, Data = json.dumps(data).encode('utf-8'))
 
 @csrf_exempt
@@ -45,8 +46,8 @@ def send_message(request):
     print(body)
 
     instance = ChatMessage()
-    print(body['body']['message'])
-    instance.message = body['body']['message']
+    print(body['body']['content'])
+    instance.message = body['body']['content']
     instance.username = body['body']['username']
     instance.timestamp = body['body']['timestamp']
 
@@ -58,7 +59,7 @@ def send_message(request):
         _send_to_connection(connect.connection_id, data)
 
 
-    return JsonResponse({"message":"sent successfully"}, status=200)
+    return JsonResponse({"content":"sent successfully"}, status=200)
 
 
 @csrf_exempt
@@ -67,7 +68,7 @@ def get_recentmessages(request):
     connection_id = body['connectionId']
 
     for chat in ChatMessage.objects.all():
-        the_data = {"message":[{"username":chat.username, "message":chat.message, "timestamp":chat.timestamp}]}
+        the_data = [{"username":chat.username, "content":chat.content, "timestamp":chat.timestamp},]
         #data = json.dumps(the_data)
-        print(the_data)
-        _send_to_connection(connection_id, the_data)
+
+    _send_to_connection(connection_id, {"content":the_data})

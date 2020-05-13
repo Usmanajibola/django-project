@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -121,3 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/usmanajibolaabassscrumy/home'
+
+region_name = config('region_name', '')
+aws_access_key_id = config('aws_access_key_id', '')
+aws_secret_access_key = config('aws_secret_access_key', '')
+endpoint_url = config("endpoint_url", '')

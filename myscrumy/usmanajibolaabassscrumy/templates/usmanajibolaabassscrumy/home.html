@@ -19,6 +19,12 @@
 
         <td>{{user}}</td>
 
+        <td>
+          {%for group in user.groups.all()%}
+          {{group}}
+          {%endfor%}
+        </td>
+
 
         <td>
           {% for week in weekly%}
